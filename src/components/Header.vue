@@ -11,7 +11,6 @@
     </div>
   </div>
 
-
   <div id="navbarExampleTransparentExample" class="navbar-menu">
     <div class="navbar-start">
       <a class="navbar-item" href="https://bulma.io/">
@@ -54,7 +53,7 @@
           <p class="control">
             <a class="bd-tw-button button" >
               <span>
-                Login
+                Trader Login
               </span>
             </a>
           </p>
@@ -72,7 +71,7 @@
 
 <script>
     export default {
-        name: "Header"
+        name: "Header",
     }
 </script>
 
