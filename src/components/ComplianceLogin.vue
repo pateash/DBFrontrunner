@@ -5,10 +5,10 @@
 
             <div class="columns is-mobile">
                 <div class="column is-half is-offset-one-quarter">
-                    <h1 class="title" style="text-align: left">Trader Log In</h1>
+                    <h1 class="title" style="text-align: left">Compliance Log In</h1>
 
 
-                    <b-field label="Trader Id"
+                    <b-field label="Compliance Manager Id"
                              type="is-success"
                              message="This username is available">
                         <b-input value="" maxlength="30"></b-input>
@@ -41,8 +41,8 @@
         data() {
             return {
                 hero:{
-                    title:"Welcome to DB Trading",
-                    message:"Please Login for continuing seeing your trade history and managing your limits ...",
+                    title:"Welcome to DB Compliance",
+                    message:"Please Login for Managing issues...",
                 }
             }
         }
