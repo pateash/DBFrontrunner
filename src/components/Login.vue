@@ -1,39 +1,49 @@
 <template>
-    <section class="section">
+    <div>
+        <Hero :message="hero.message" :title="hero.title"></Hero>
+        <section class="section">
 
-        <div class="columns is-mobile" >
-            <div class="column is-half is-offset-one-quarter" >
-                <h1 class="title" style="text-align: left">Trader Log In</h1>
+            <div class="columns is-mobile">
+                <div class="column is-half is-offset-one-quarter">
+                    <h1 class="title" style="text-align: left">Trader Log In</h1>
 
 
-                <b-field label="TraderId"
-                         type="is-success"
-                         message="This username is available">
-                    <b-input value="" maxlength="30"></b-input>
-                </b-field>
+                    <b-field label="TraderId"
+                             type="is-success"
+                             message="This username is available">
+                        <b-input value="" maxlength="30"></b-input>
+                    </b-field>
 
-                <b-field label="Password">
-                    <b-input type="password"
-                             value="iwantmytreasure"
-                             password-reveal>
-                    </b-input>
-                </b-field>
-            </div>
-
-        </div>
-        <div class="columns is-mobile">
-             <div class="column is-half is-offset-8">
-                <button class="button is-primary is-right" slot="trigger">Log In</button>
+                    <b-field label="Password">
+                        <b-input type="password"
+                                 value="iwantmytreasure"
+                                 password-reveal>
+                        </b-input>
+                    </b-field>
+                </div>
 
             </div>
-        </div>
-    </section>
-</template>
+            <div class="columns is-mobile">
+                <div class="column is-half is-offset-8">
+                    <button class="button is-primary is-right" slot="trigger">Log In</button>
+
+                </div>
+            </div>
+        </section>
+    </div></template>
 <script>
+    import Hero from './Hero';
+
     export default {
+        components:{
+            Hero
+        },
         data() {
             return {
-                name: 'John Silver'
+                hero:{
+                    title:"Welcome to DB Compliance",
+                    message:"Please Login for continuing seeing your trade history and manage your clients ...",
+                }
             }
         }
     }
