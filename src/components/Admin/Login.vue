@@ -32,7 +32,7 @@
         </section>
     </div></template>
 <script>
-    import Hero from './Hero';
+    import Hero from '../Hero';
 
     export default {
         components:{

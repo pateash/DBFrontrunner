@@ -22,7 +22,7 @@
 
 <style scoped>
 .footer{
-  position: fixed;
+  /*position: absolute;*/
   right:0px;
   bottom: -5em;
 }

@@ -6,8 +6,10 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-const Login = () => import('@/components/Login');
-const ComplianceLogin = () => import('@/components/ComplianceLogin');
+const Login = () => import('@/components/User/Login');
+const UserDashboard = () => import('@/components/User/Dashboard');
+const ComplianceDashboard = () => import('@/components/Admin/Dashboard');
+const ComplianceLogin = () => import('@/components/Admin/Login');
 const Error404 = () => import('@/components/Error404');
 
 export default new VueRouter({
@@ -18,6 +20,10 @@ export default new VueRouter({
         {
             path: '/login',
             component: Login,
+        },
+        {
+            path: '/dashboard',
+            component: UserDashboard,
         },
 
 
@@ -32,6 +38,10 @@ export default new VueRouter({
         {
             path: '/compliance/login',
             component: ComplianceLogin,
+        },
+        {
+            path: '/compliance/dashboard',
+            component: ComplianceDashboard,
         },
 
         //redirecting home
