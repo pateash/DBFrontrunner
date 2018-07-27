@@ -8,7 +8,7 @@ Vue.use(VueRouter);
 
 const Login = () => import('@/components/Login');
 const ComplianceLogin = () => import('@/components/ComplianceLogin');
-// const NotFound = () => import('@/components/404');
+const Error404 = () => import('@/components/Error404');
 
 export default new VueRouter({
     mode: 'history',
@@ -40,9 +40,9 @@ export default new VueRouter({
             redirect:'/compliance/login'
         },
 
-        // {
-        //     path: '*',
-        //     component: NotFound,
-        // }
+        {
+            path: '*',
+            component: Error404,
+        }
     ]
 });

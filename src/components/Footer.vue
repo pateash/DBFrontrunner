@@ -1,5 +1,5 @@
 <template>
-    <section class="hero"  style="margin-top: 5em;">
+    <section class="hero footer"  style="margin-top: 5em;">
   <div class="hero-body" style="padding-bottom: 1em">
     <div class="container">
       <h2 class="subtitle">
@@ -21,5 +21,9 @@
 </script>
 
 <style scoped>
-
+.footer{
+  position: fixed;
+  right:0px;
+  bottom: -5em;
+}
 </style>
