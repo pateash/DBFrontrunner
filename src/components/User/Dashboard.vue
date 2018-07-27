@@ -1,8 +1,6 @@
 <template>
     <div>
         <Hero message="Following table contains trade information" title="Trader Dashboard"></Hero>
-<b-icon pack="fas" icon="check"></b-icon>
-        <!--<div id="app" class="container">-->
 
         <section class="container" style="margin-top: 2em">
             <b-table
@@ -45,8 +43,6 @@
                 </template>
             </b-table>
         </section>
-
-        <!--</div>-->
     </div>
 </template>
 
