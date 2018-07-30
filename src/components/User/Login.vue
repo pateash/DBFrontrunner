@@ -43,9 +43,21 @@
                 hero:{
                     title:"Welcome to DB Trading",
                     message:"Please Login for continuing seeing your trade history and managing your limits ...",
-                }
+                },
+                user:{}
             }
-        }
+        },
+
+        //created() and mounted() both are being called everytime we change route to this url
+        mounted(){
+            // if(!this.$store.user.isLoggedIn('/user/isLogged')){
+            //     console.log("not logged in");
+            // }
+            // console.log("mounted");
+            // this.$store.dispatch('user/login',user);
+            console.log(this.$store);
+
+        },
     }
 </script>
 
