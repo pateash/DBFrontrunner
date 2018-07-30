@@ -28,7 +28,7 @@
             </div>
             <div class="columns is-mobile">
                 <div class="column is-half is-offset-8">
-                    <button class="button is-primary is-right"  @click="logIn" slot="trigger">Log In</button>
+                    <button class="button is-primary is-right"  autofocus @click="logIn" slot="trigger">Log In</button>
                 </div>
             </div>
         </section>
