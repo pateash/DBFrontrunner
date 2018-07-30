@@ -6,7 +6,6 @@
         <a class="navbar-item" href="/">
           <span class="title">Deutsche bank</span>      <!--<img src="http://allvectorlogo.com/img/2017/03/deutsche-bank-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">-->
         </a>
-        </a>
       </router-link>
       <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
         <span></span>
