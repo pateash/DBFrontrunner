@@ -1,7 +1,7 @@
 <template>
     <div>
         <Hero message="Following table contains trade information" title="Trader Dashboard"></Hero>
-
+            {{user}}
         <section class="container" style="margin-top: 2em">
             <b-table
                     :data="data"
@@ -53,6 +53,7 @@
         components:{Hero},
         data() {
             return {
+                user:{},
                 data: [],
                 total: 0,
                 loading: false,
@@ -139,8 +140,21 @@
                     : value
             }
         },
+
         mounted() {
-            this.loadAsyncData()
+            this.loadAsyncData();
+            console.log("mounted");
+            // console.log(this.$store.getters.isLoggedIn);
+            if (this.$store.getters.isLoggedIn) {
+                console.log("logged in");
+
+                //if loggedIn, then update our user object with state
+                this.user = this.$store.state.user;
+
+                //and go to dashboard
+            } else {
+                console.log("Logged in");
+            }
         }
     }
 
