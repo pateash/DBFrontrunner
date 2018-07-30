@@ -10,9 +10,6 @@ import Hero from './components/Hero';
 // import axios from "axios";
 
 Vue.use(Buefy);
-
-Vue.use(Vuex);
-
 import store from "./store";
 
 //so that we could use it everywhere inside our project
