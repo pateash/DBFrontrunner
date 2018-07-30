@@ -70,11 +70,9 @@
             </div>
 
             <p class="control">
-              <router-link to="/compliance">
-                <a class="button is-primary">
-                  <span>Logged Out</span>
-                </a>
-              </router-link>
+              <a class="button is-primary" @click="logOut">
+                <span>Sign out</span>
+              </a>
             </p>
           </div>
         </div>
@@ -96,6 +94,17 @@
             },
             userData(){
                 return this.$store.getters.getUser;
+            }
+        },
+        methods:{
+            logOut(){
+                console.log("trying to logout....");
+                if(this.$store.dispatch('logOut')){
+                    this.$router.push("/");
+                }else{
+                    console.log("Couldn't able to logout..");
+                    
+                }
             }
         }
     }
