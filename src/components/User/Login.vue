@@ -9,7 +9,6 @@
                 <div class="column is-half is-offset-one-quarter">
                     <h1 class="title" style="text-align: left">Trader Log In</h1>
 
-
                     <b-field label="Trader Id"
                              message="This username is available">
                         <b-input maxlength="30" v-model="user.id" required></b-input>
@@ -47,51 +46,38 @@
                     title:"Welcome to DB Trading",
                     message:"Please Login for continuing seeing your trade history and managing your limits ...",
                 },
-                user:{
-                    id:'',
-                    name:'',
-                    loggedIn:false,
-                    password:''
-                }
+                user:{} //we will use this temperary varible and use computed property for rendering data.
             }
         },
 
         methods:{
           logIn(){
               console.log("trying to login....");
-              this.$store.dispatch('logIn',this.user);
-          },
-            updateUser(){
-              this.user=this.$store.getters.getUser;
-              console.log("updated");
-              console.log(this.user);
-
-            }
+              if(this.$store.dispatch('logIn',this.user)){
+                  this.$router.push("/dashboard")
+              }
+          }
         },
-        computed:{
+
+        computed:{ //we will use computed properties to get userdata from state.
             userData(){
                 return this.$store.getters.getUser;
             }
         },
-        // created(){
-        //     console.log("created");
-        // },
+
         //created() and mounted() both are being called everytime we change route to this url
         mounted(){
-            console.log("mounted");
+            // console.log("mounted");
             // console.log(this.$store.getters.isLoggedIn);
             if(this.$store.getters.isLoggedIn){
                 console.log("logged in");
+                this.$router.push("/dashboard");
                 //if loggedIn, then update our user object with state
-                this.updateUser();
+                // this.updateUser();
                 //and go to dashboard
             }else{
                 console.log("not Logged in");
             }
-            this.$store.dispatch('user/login',user);
-            this.updateUser();
-        //     // console.log(this.$store);
-        //
         },
     }
 </script>

@@ -35,14 +35,19 @@ const actions={
             .then((response)=>{
                 console.log(response.data);
                 commit('loggedIn',response.data);
+                return true;//successfully logged in
             })
-            .catch((response)=>console.error(response));
+            .catch((response)=>{
+                console.error(response);
+                return false; //can't logIn
+            });
     }
 };
 
 const mutations={
     loggedIn(state,payload){
-        state.user=Object.assign({},state.user,payload.data);
+        //loggedIn: true, will override
+        state.user=Object.assign({},state.user,payload.data,{'loggedIn':true});
         console.log("state updated");
     }
 };
