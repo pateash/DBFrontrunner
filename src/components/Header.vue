@@ -102,6 +102,8 @@
 </template>
 
 <script>
+    import notification from "../services/notification";
+
     export default {
         name: "Header",
         data(){
@@ -144,18 +146,18 @@
             logOut(){
                 console.log("trying to logout....");
                 if(this.$store.dispatch('logOut')){
+                    notification(this,"Logging out...")
                     this.$router.push("/");
                 }else{
-                    console.log("Couldn't able to logout..");
-
+                    notification(this,"Cound't able to logout, try again...")
                 }
             },
             adminLogOut(){
-                console.log("admin trying to logout....");
+                notification(this,"Logging out...")
                 if(this.$store.dispatch('adminLogOut')){
                     this.$router.push("/compliance");
                 }else{
-                    console.log("admin Couldn't able to logout..");
+                    console.log("Couldn't able to logout, try again..");
 
                 }
             }
