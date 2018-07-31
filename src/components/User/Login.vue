@@ -60,7 +60,7 @@
                     }else if(response.code==0) {
                         notification(this, "Error! User not found, try again..");
                     }else{
-                        notification(this, "Error! Wrong password for username..");
+                        notification(this, "Error! Wrong password for Trader Id..");
 
                     }
 

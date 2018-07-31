@@ -52,14 +52,17 @@
         methods: {
             logIn() {
                 console.log("admin trying to login....");
-                this.$store.dispatch('adminLogIn', this.admin).then(resp=>{
-                    console.log("responce is"+resp);
-                    this.$router.push("/compliance/dashboard");
-                }).catch(error=>{
-                    console.log(error);
-                    console.log("couldn't able to login");
+                this.$store.dispatch('adminLogIn', this.admin).then(response=>{
+                    //todo check if logged successfull or not.....
+                    if(response.code==1) {
+                        notification(this, "Success! logged in..");
+                        this.$router.push("/compliance/dashboard");
+                    }else if(response.code==0) {
+                        notification(this, "Error! Compliance Manager not found, try again..");
+                    }else{
+                        notification(this, "Error! Wrong password for Compliance Id..");
+                    }
                 });
-
             }
         },
         computed: { //we will use computed properties to get admindata from state.
