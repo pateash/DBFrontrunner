@@ -26,7 +26,7 @@
             </div>
             <div class="columns is-mobile">
                 <div class="column is-half is-offset-8">
-                    <button class="button is-primary is-right" slot="trigger" @click="logIn">Log In</button>
+                    <button class="button is-info is-right" slot="trigger" @click="logIn">Log In</button>
 
                 </div>
             </div>

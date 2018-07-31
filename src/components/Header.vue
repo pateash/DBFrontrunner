@@ -4,7 +4,7 @@
 
       <router-link to="/">
         <a class="navbar-item" href="/">
-          <span class="title">Deutsche bank</span>      <!--<img src="http://allvectorlogo.com/img/2017/03/deutsche-bank-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">-->
+          <span class="title" :class="{'is-primary':!isAdminSite,'is-info':isAdminSite}">Deutsche bank</span>
         </a>
       </router-link>
       <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
@@ -32,7 +32,7 @@
             </p>
             <p class="control">
               <router-link to="/compliance">
-                <a class="button is-primary">
+                <a class="button" :class="{'is-primary':!isAdminSite,'is-info':isAdminSite}">
                   <span>Compliance Login</span>
                 </a>
               </router-link>
@@ -121,8 +121,18 @@
             },
             adminData(){
                 return this.$store.getters.getAdmin;
-            }
+            },
+            isAdminSite(){
 
+                  let matchregex=new RegExp(/.*compliance.*/).exec(this.$route.fullPath);
+                  if(matchregex==undefined){
+                      console.log("do not match");
+                      return false;
+                  }
+                  console.log("matched");
+                  return true;
+
+            }
         },
         methods:{
             logOut(){
@@ -148,10 +158,24 @@
 </script>
 
 <style scoped>
-  .title{
+
+  .user-class{
     color:#7957d5;
     font-weight: bolder;
   }
+  .user-button{
+    background-color:#7957d5;
+    color:white;
+  }
+  .admin-class{
+    color:rgb(0,103,158);
+    font-weight: bolder;
+  }
+  .admin-button{
+    background-color:rgb(0,103,158);
+    color:white;
+  }
+
   .control{
     font-weight: bold;
   }
