@@ -35,6 +35,7 @@
     </div></template>
 <script>
     import Hero from '../Hero';
+    import notification from "@/services/notification";
 
     export default {
         components: {
@@ -54,7 +55,7 @@
             logIn() {
                 console.log("trying to login....");
                 this.$store.dispatch('logIn', this.user).then(resp=>{
-                   console.log("responce is"+resp);
+                    console.log("responce is"+resp);
                     this.$router.push("/dashboard");
                 }).catch(error=>{
                     console.log(error);
@@ -72,6 +73,7 @@
 
         //created() and mounted() both are being called everytime we change route to this url
         mounted() {
+            notification(this,'hello');
             // console.log("mounted");
             // console.log(this.$store.getters.isLoggedIn);
             if (this.$store.getters.isLoggedIn) {
