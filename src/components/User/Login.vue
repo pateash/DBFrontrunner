@@ -35,7 +35,6 @@
     </div></template>
 <script>
     import Hero from '../Hero';
-    import notification from "@/services/notification";
 
     export default {
         components: {
@@ -73,7 +72,6 @@
 
         //created() and mounted() both are being called everytime we change route to this url
         mounted() {
-            notification(this,'hello');
             // console.log("mounted");
             // console.log(this.$store.getters.isLoggedIn);
             if (this.$store.getters.isLoggedIn) {
@@ -83,7 +81,7 @@
                 // this.updateUser();
                 //and go to dashboard
             } else {
-                console.log("not Logged in showing form");
+                notification(this,'Please Login as trader to continue.');
             }
         }
     }

@@ -62,7 +62,7 @@
 
             }
         },
-         computed: { //we will use computed properties to get admindata from state.
+        computed: { //we will use computed properties to get admindata from state.
             adminData() {
                 return this.$store.getters.getAdmin;
             }
@@ -78,7 +78,7 @@
                 //if loggedIn, then update our admin object with state
                 //and go to dashboard
             } else {
-                console.log("not Logged in showing form");
+                notification(this,'Please Login as Compliance Manager to continue.');
             }
         }
     }

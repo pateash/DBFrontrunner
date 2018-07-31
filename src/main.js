@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+import notification from './services/notification';
+
+
+//for making it global to use
+window.notification=notification;
 
 import router from "./router";
 import Buefy from 'buefy';
