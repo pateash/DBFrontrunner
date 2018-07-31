@@ -37,48 +37,53 @@
     import Hero from '../Hero';
 
     export default {
-        components:{
+        components: {
             Hero
         },
         data() {
             return {
-                hero:{
-                    title:"Welcome to DB Trading",
-                    message:"Please Login for continuing seeing your trade history and managing your limits ...",
+                hero: {
+                    title: "Welcome to DB Trading",
+                    message: "Please Login for continuing seeing your trade history and managing your limits ...",
                 },
-                user:{} //we will use this temperary varible and use computed property for rendering data.
+                user: {} //we will use this temperary varible and use computed property for rendering data.
             }
         },
 
-        methods:{
-          logIn(){
-              console.log("trying to login....");
-              if(this.$store.dispatch('logIn',this.user)){
-                  this.$router.push("/dashboard")
-              }
-          }
+        methods: {
+            logIn() {
+                console.log("trying to login....");
+                this.$store.dispatch('logIn', this.user).then(resp=>{
+                   console.log("responce is"+resp);
+                    this.$router.push("/dashboard");
+                }).catch(error=>{
+                    console.log(error);
+                    console.log("couldn't able to login");
+                });
+
+            }
         },
 
-        computed:{ //we will use computed properties to get userdata from state.
-            userData(){
+        computed: { //we will use computed properties to get userdata from state.
+            userData() {
                 return this.$store.getters.getUser;
             }
         },
 
         //created() and mounted() both are being called everytime we change route to this url
-        mounted(){
+        mounted() {
             // console.log("mounted");
             // console.log(this.$store.getters.isLoggedIn);
-            if(this.$store.getters.isLoggedIn){
-                console.log("logged in");
+            if (this.$store.getters.isLoggedIn) {
+                console.log("already logged in");
                 this.$router.push("/dashboard");
                 //if loggedIn, then update our user object with state
                 // this.updateUser();
                 //and go to dashboard
-            }else{
-                console.log("not Logged in");
+            } else {
+                console.log("not Logged in showing form");
             }
-        },
+        }
     }
 </script>
 

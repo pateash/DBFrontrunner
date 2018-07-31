@@ -28,19 +28,21 @@ const getters={
 
 
 const actions={
-    logIn({commit},{id,password}){
+   logIn({commit},{id,password}){
+       return new Promise((resolve,reject)=>{
         axios.post("/users/login",{
             'id':id,'password':password
         })
             .then((response)=>{
                 console.log(response.data);
                 commit('logIn',response.data);
-                return true;//successfully logged in
+                return resolve(true);//successfully logged in
             })
-            .catch((response)=>{
+            .catch((error)=>{
                 console.error(response);
-                return false; //can't logIn
+                return reject(false); //can't logIn
             });
+        })
     },
     logOut({commit}){
         commit('logOut');
@@ -52,7 +54,7 @@ const mutations={
     logIn(state,payload){
         //loggedIn: true, will override
         state.user=Object.assign({},state.user,payload.data,{'loggedIn':true});
-        console.log("state updated");
+        console.log("loggedin! state updated");
     },
     logOut(state){
         state.user=Object.assign({},{

@@ -141,17 +141,13 @@
             }
         },
 
-        mounted() {
+        created() {
             this.loadAsyncData();
-            console.log("mounted");
-            // console.log(this.$store.getters.isLoggedIn);
-            if (this.$store.getters.isLoggedIn) {
-                console.log("logged in");
-
-                //if loggedIn, then update our user object with state
-                this.user = this.$store.state.user;
-
+            //if not loggedin then go back to home page
+            if (!this.$store.getters.isLoggedIn) {
+                console.log("not logged in dashboard");
                 //and go to dashboard
+                this.$router.push("/");
             } else {
                 console.log("Logged in");
             }
