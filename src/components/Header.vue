@@ -7,14 +7,14 @@
           <span class="title" :class="{'is-primary':!isAdminSite,'is-info':isAdminSite}">Deutsche bank</span>
         </a>
       </router-link>
-      <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+      <div class="navbar-burger burger" :class="{'is-active':navActive}" data-target="navbarExampleTransparentExample" @click="toggleNavbar">
         <span></span>
         <span></span>
         <span></span>
       </div>
     </div>
 
-    <div id="navbarExampleTransparentExample" class="navbar-menu">
+    <div id="navbarExampleTransparentExample" class="navbar-menu" :class="{'is-active':navActive}" >
 
       <div class="navbar-end">
 
@@ -42,60 +42,59 @@
           <!--if logged in as user-->
           <div v-else-if="isLoggedIn" class="field is-grouped">
             <p class="control">
-                <a class="bd-tw-button button" @click="logOut">
-                  <span> Trader Logout</span>
-                </a>
+              <a class="bd-tw-button button" @click="logOut">
+                <span> Trader Logout</span>
+              </a>
             </p>
           </div>
 
           <!--if admin is logged in-->
           <div v-else class="field is-grouped">
             <p class="control">
-                <a class="bd-tw-button button" @click="adminLogOut">
-                  <span> Compliance Logout</span>
-                </a>
+              <a class="bd-tw-button button" @click="adminLogOut">
+                <span> Compliance Logout</span>
+              </a>
             </p>
           </div>
           <!--<div v-else class="field is-grouped">-->
-            <!--<div class="navbar-start">-->
-              <!--<div class="navbar-item has-dropdown is-hoverable">-->
-                <!--<a class="navbar-link" href="/documentation/overview/start/">-->
-                  <!--Limits-->
-                <!--</a>-->
-                <!--<div class="navbar-dropdown is-boxed">-->
-                  <!--<a class="navbar-item" href="/documentation/overview/start/">-->
-                    <!--Overview-->
-                  <!--</a>-->
-                  <!--<a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">-->
-                    <!--Modifiers-->
-                  <!--</a>-->
-                  <!--<a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">-->
-                    <!--Columns-->
-                  <!--</a>-->
-                  <!--<a class="navbar-item" href="https://bulma.io/documentation/layout/container/">-->
-                    <!--Layout-->
-                  <!--</a>-->
-                  <!--<a class="navbar-item" href="https://bulma.io/documentation/form/general/">-->
-                    <!--Form-->
-                  <!--</a>-->
-                  <!--<hr class="navbar-divider">-->
-                  <!--<a class="navbar-item" href="https://bulma.io/documentation/elements/box/">-->
-                    <!--Elements-->
-                  <!--</a>-->
-                  <!--<a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">-->
-                    <!--Components-->
-                  <!--</a>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-
-            <!--<p class="control">-->
-              <!--<a class="button is-primary" @click="logOut">-->
-                <!--<span>Sign out</span>-->
-              <!--</a>-->
-            <!--</p>-->
+          <!--<div class="navbar-start">-->
+          <!--<div class="navbar-item has-dropdown is-hoverable">-->
+          <!--<a class="navbar-link" href="/documentation/overview/start/">-->
+          <!--Limits-->
+          <!--</a>-->
+          <!--<div class="navbar-dropdown is-boxed">-->
+          <!--<a class="navbar-item" href="/documentation/overview/start/">-->
+          <!--Overview-->
+          <!--</a>-->
+          <!--<a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">-->
+          <!--Modifiers-->
+          <!--</a>-->
+          <!--<a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">-->
+          <!--Columns-->
+          <!--</a>-->
+          <!--<a class="navbar-item" href="https://bulma.io/documentation/layout/container/">-->
+          <!--Layout-->
+          <!--</a>-->
+          <!--<a class="navbar-item" href="https://bulma.io/documentation/form/general/">-->
+          <!--Form-->
+          <!--</a>-->
+          <!--<hr class="navbar-divider">-->
+          <!--<a class="navbar-item" href="https://bulma.io/documentation/elements/box/">-->
+          <!--Elements-->
+          <!--</a>-->
+          <!--<a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">-->
+          <!--Components-->
+          <!--</a>-->
+          <!--</div>-->
+          <!--</div>-->
           <!--</div>-->
 
+          <!--<p class="control">-->
+          <!--<a class="button is-primary" @click="logOut">-->
+          <!--<span>Sign out</span>-->
+          <!--</a>-->
+          <!--</p>-->
+          <!--</div>-->
         </div>
       </div>
     </div>
@@ -105,7 +104,11 @@
 <script>
     export default {
         name: "Header",
-        user:{},
+        data(){
+            return{
+                navActive:false
+            }
+        },
         mounted(){
 
         },
@@ -124,17 +127,20 @@
             },
             isAdminSite(){
 
-                  let matchregex=new RegExp(/.*compliance.*/).exec(this.$route.fullPath);
-                  if(matchregex==undefined){
-                      console.log("do not match");
-                      return false;
-                  }
-                  console.log("matched");
-                  return true;
+                let matchregex=new RegExp(/.*compliance.*/).exec(this.$route.fullPath);
+                if(matchregex==undefined){
+                    console.log("do not match");
+                    return false;
+                }
+                console.log("matched");
+                return true;
 
             }
         },
         methods:{
+            toggleNavbar(){
+                this.navActive=!this.navActive;
+            },
             logOut(){
                 console.log("trying to logout....");
                 if(this.$store.dispatch('logOut')){

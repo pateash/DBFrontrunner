@@ -35,6 +35,7 @@
     </div></template>
 <script>
     import Hero from '../Hero';
+    import notification from "../../services/notification";
 
     export default {
         components: {
@@ -54,11 +55,13 @@
             logIn() {
                 console.log("trying to login....");
                 this.$store.dispatch('logIn', this.user).then(resp=>{
-                    console.log("responce is"+resp);
+
+                    //todo check if logged successfull or not.....
+                    notification(this,"Logged in successfully...");
                     this.$router.push("/dashboard");
                 }).catch(error=>{
                     console.log(error);
-                    console.log("couldn't able to login");
+                    notification(this,"Couldn't able to login, try again...",'danger');
                 });
 
             }
