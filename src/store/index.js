@@ -14,7 +14,12 @@ const state={
         name:'',
         password:''
     },
-    message:"hello"
+    admin:{
+        loggedIn:false,
+        id:'',
+        name:'',
+        password:''
+    },
 };
 
 const getters={
@@ -23,29 +28,57 @@ const getters={
     },
     getUser(state){
         return state.user;
+    },
+    isAdminLoggedIn(state) {
+        return state.admin.loggedIn;
+    },
+    getAdmin(state){
+        return state.admin;
     }
 };
 
 
 const actions={
-   logIn({commit},{id,password}){
-       return new Promise((resolve,reject)=>{
-        axios.post("/users/login",{
-            'id':id,'password':password
-        })
-            .then((response)=>{
-                console.log(response.data);
-                commit('logIn',response.data);
-                return resolve(true);//successfully logged in
+    logIn({commit},{id,password}){
+        return new Promise((resolve,reject)=>{
+            axios.post("/users/login",{
+                'id':id,'password':password
             })
-            .catch((error)=>{
-                console.error(response);
-                return reject(false); //can't logIn
-            });
+                .then((response)=>{
+                    console.log(response.data);
+                    commit('logIn',response.data);
+                    return resolve(true);//successfully logged in
+                })
+                .catch((error)=>{
+                    console.error(response);
+                    return reject(false); //can't logIn
+                });
         })
     },
+
     logOut({commit}){
         commit('logOut');
+        return true;
+    },
+
+    adminLogIn({commit},{id,password}){
+        return new Promise((resolve,reject)=>{
+            axios.post("/admin/login",{
+                'id':id,'password':password
+            })
+                .then((response)=>{
+                    console.log(response.data);
+                    commit('adminLogIn',response.data);
+                    return resolve(true);//successfully logged in
+                })
+                .catch((error)=>{
+                    console.error(response);
+                    return reject(false); //can't logIn
+                });
+        })
+    },
+    adminLogOut({commit}){
+        commit('adminLogOut');
         return true;
     }
 };
@@ -58,6 +91,20 @@ const mutations={
     },
     logOut(state){
         state.user=Object.assign({},{
+            loggedIn:false,
+            id:'',
+            name:'',
+            password:''
+        });
+        console.log("logged Out successfully");
+    },
+    adminLogIn(state,payload){
+        //loggedIn: true, will override
+        state.admin=Object.assign({},state.admin,payload.data,{'loggedIn':true});
+        console.log("loggedin! state updated");
+    },
+    adminLogOut(state){
+        state.admin=Object.assign({},{
             loggedIn:false,
             id:'',
             name:'',

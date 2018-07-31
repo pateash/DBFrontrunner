@@ -20,7 +20,9 @@
 
         <div class="navbar-item">
 
-          <div v-if="!isLoggedIn" class="field is-grouped">
+
+          <!--if any of the admin and user is not logged in -->
+          <div v-if="!isLoggedIn && !isAdminLoggedIn" class="field is-grouped">
             <p class="control">
               <router-link  to="/">
                 <a class="bd-tw-button button">
@@ -36,45 +38,64 @@
               </router-link>
             </p>
           </div>
-          <div v-else class="field is-grouped">
-            <div class="navbar-start">
-              <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link" href="/documentation/overview/start/">
-                  Limits
-                </a>
-                <div class="navbar-dropdown is-boxed">
-                  <a class="navbar-item" href="/documentation/overview/start/">
-                    Overview
-                  </a>
-                  <a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
-                    Modifiers
-                  </a>
-                  <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
-                    Columns
-                  </a>
-                  <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
-                    Layout
-                  </a>
-                  <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
-                    Form
-                  </a>
-                  <hr class="navbar-divider">
-                  <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
-                    Elements
-                  </a>
-                  <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
-                    Components
-                  </a>
-                </div>
-              </div>
-            </div>
 
+          <!--if logged in as user-->
+          <div v-else-if="isLoggedIn" class="field is-grouped">
             <p class="control">
-              <a class="button is-primary" @click="logOut">
-                <span>Sign out</span>
-              </a>
+                <a class="bd-tw-button button" @click="logOut">
+                  <span> Trader Logout</span>
+                </a>
             </p>
           </div>
+
+          <!--if admin is logged in-->
+          <div v-else class="field is-grouped">
+            <p class="control">
+                <a class="bd-tw-button button" @click="adminLogOut">
+                  <span> Compliance Logout</span>
+                </a>
+            </p>
+          </div>
+          <!--<div v-else class="field is-grouped">-->
+            <!--<div class="navbar-start">-->
+              <!--<div class="navbar-item has-dropdown is-hoverable">-->
+                <!--<a class="navbar-link" href="/documentation/overview/start/">-->
+                  <!--Limits-->
+                <!--</a>-->
+                <!--<div class="navbar-dropdown is-boxed">-->
+                  <!--<a class="navbar-item" href="/documentation/overview/start/">-->
+                    <!--Overview-->
+                  <!--</a>-->
+                  <!--<a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">-->
+                    <!--Modifiers-->
+                  <!--</a>-->
+                  <!--<a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">-->
+                    <!--Columns-->
+                  <!--</a>-->
+                  <!--<a class="navbar-item" href="https://bulma.io/documentation/layout/container/">-->
+                    <!--Layout-->
+                  <!--</a>-->
+                  <!--<a class="navbar-item" href="https://bulma.io/documentation/form/general/">-->
+                    <!--Form-->
+                  <!--</a>-->
+                  <!--<hr class="navbar-divider">-->
+                  <!--<a class="navbar-item" href="https://bulma.io/documentation/elements/box/">-->
+                    <!--Elements-->
+                  <!--</a>-->
+                  <!--<a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">-->
+                    <!--Components-->
+                  <!--</a>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+
+            <!--<p class="control">-->
+              <!--<a class="button is-primary" @click="logOut">-->
+                <!--<span>Sign out</span>-->
+              <!--</a>-->
+            <!--</p>-->
+          <!--</div>-->
+
         </div>
       </div>
     </div>
@@ -94,7 +115,14 @@
             },
             userData(){
                 return this.$store.getters.getUser;
+            },
+            isAdminLoggedIn(){
+                return this.$store.getters.isAdminLoggedIn;
+            },
+            adminData(){
+                return this.$store.getters.getAdmin;
             }
+
         },
         methods:{
             logOut(){
@@ -103,7 +131,16 @@
                     this.$router.push("/");
                 }else{
                     console.log("Couldn't able to logout..");
-                    
+
+                }
+            },
+            adminLogOut(){
+                console.log("admin trying to logout....");
+                if(this.$store.dispatch('adminLogOut')){
+                    this.$router.push("/compliance");
+                }else{
+                    console.log("admin Couldn't able to logout..");
+
                 }
             }
         }

@@ -8,8 +8,8 @@ Vue.use(VueRouter);
 
 const Login = () => import('@/components/User/Login');
 const UserDashboard = () => import('@/components/User/Dashboard');
-const ComplianceDashboard = () => import('@/components/Admin/Dashboard');
-const ComplianceLogin = () => import('@/components/Admin/Login');
+const ComplianceDashboard = () => import('@/components/Compliance/Dashboard');
+const ComplianceLogin = () => import('@/components/Compliance/Login');
 const Error404 = () => import('@/components/Error404');
 
 export default new VueRouter({

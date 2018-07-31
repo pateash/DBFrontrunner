@@ -1,7 +1,7 @@
 <template>
     <div>
         <Hero message="Following table contains Flagged Trade, you have to verify the trade..." title="Compliance Dashboard"></Hero>
-
+        {{admin}}
         <section class="container" style="margin-top: 2em">
             <b-table
                     :data="data"
@@ -53,6 +53,7 @@
         components:{Hero},
         data() {
             return {
+                admin:{},
                 data: [],
                 total: 0,
                 loading: false,
@@ -139,8 +140,16 @@
                     : value
             }
         },
-        mounted() {
-            this.loadAsyncData()
+        created() {
+            this.loadAsyncData();
+             //if not loggedin then go back to login page
+            if (!this.$store.getters.isAdminLoggedIn) {
+                console.log("admin not logged in dashboard");
+                //and go to dashboard
+                this.$router.push("/compliance");
+            } else {
+                console.log("Admin Logged in");
+            }
         }
     }
 

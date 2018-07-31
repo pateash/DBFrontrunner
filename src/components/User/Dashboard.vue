@@ -143,7 +143,7 @@
 
         created() {
             this.loadAsyncData();
-            //if not loggedin then go back to home page
+            //if not loggedin then go back to login page
             if (!this.$store.getters.isLoggedIn) {
                 console.log("not logged in dashboard");
                 //and go to dashboard
