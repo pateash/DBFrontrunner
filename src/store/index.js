@@ -45,13 +45,12 @@ const actions={
                 'id':id,'password':password
             })
                 .then((response)=>{
-                    console.log(response.data);
                     commit('logIn',response.data);
-                    return resolve(true);//successfully logged in
+                        return resolve(response.data);//successfully logged in
                 })
                 .catch((error)=>{
-                    console.error(response);
-                    return reject(false); //can't logIn
+                    console.error(error);
+                    return reject(error); //can't logIn
                 });
         })
     },

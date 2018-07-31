@@ -9,11 +9,9 @@
                 <div class="column is-half is-offset-one-quarter">
                     <h1 class="title" style="text-align: left">Trader Log In</h1>
 
-                    <b-field label="Trader Id"
-                             message="This username is available">
-                        <b-input maxlength="30" v-model="user.id" required></b-input>
+                    <b-field label="Trader Id">
+                        <b-input maxlength="30" required v-model="user.id"></b-input>
                     </b-field>
-
                     <b-field label="Password" >
                         <b-input type="password"
                                  password-reveal
@@ -54,13 +52,20 @@
         methods: {
             logIn() {
                 console.log("trying to login....");
-                this.$store.dispatch('logIn', this.user).then(resp=>{
-
+                this.$store.dispatch('logIn', this.user).then(response=>{
                     //todo check if logged successfull or not.....
-                    notification(this,"Logged in successfully...");
-                    this.$router.push("/dashboard");
+                    if(response.code==1) {
+                        notification(this, "Success! logged in..");
+                        this.$router.push("/dashboard");
+                    }else if(response.code==0) {
+                        notification(this, "Error! User not found, try again..");
+                    }else{
+                        notification(this, "Error! Wrong password for username..");
+
+                    }
+
                 }).catch(error=>{
-                    console.log(error);
+                    console.log("ERROR"+error);
                     notification(this,"Couldn't able to login, try again...",'danger');
                 });
 
