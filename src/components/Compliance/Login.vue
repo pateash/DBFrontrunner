@@ -2,24 +2,21 @@
     <div>
         <Hero :message="hero.message" :title="hero.title"></Hero>
 
-        {{admin}} <br>
-        {{adminData}}
+        <!--{{admin}} <br>-->
+        <!--{{adminData}}-->
         <section class="section">
             <div class="columns is-mobile">
                 <div class="column is-half is-offset-one-quarter">
                     <h1 class="title" style="text-align: left">Compliance Log In</h1>
-
-
-                    <b-field label="Compliance Manager Id"
-                             type="is-success"
-                             message="This username is available">
-                        <b-input v-model='admin.id' maxlength="30"></b-input>
+                    <b-field label="Compliance Manager Id">
+                        <b-input v-model='admin.id' maxlength="30" required></b-input>
                     </b-field>
 
                     <b-field label="Password">
                         <b-input type="password"
                                  v-model="admin.password"
-                                 password-reveal>
+                                 password-reveal
+                        required>
                         </b-input>
                     </b-field>
                 </div>

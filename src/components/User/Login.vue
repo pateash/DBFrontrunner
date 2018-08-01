@@ -1,8 +1,8 @@
 <template>
     <div>
         <Hero :message="hero.message" :title="hero.title"></Hero>
-        {{user}} <br>
-        {{userData}}
+        <!--{{user}} <br>-->
+        <!--{{userData}}-->
         <section class="section">
 
             <div class="columns is-mobile">
