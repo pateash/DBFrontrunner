@@ -45,7 +45,10 @@
                     title: "Welcome to DB Trading",
                     message: "Please Login for continuing seeing your trade history and managing your limits ...",
                 },
-                user: {} //we will use this temperary varible and use computed property for rendering data.
+                user: {
+                    id:"DBBRO8",
+                    password:"123"
+                } //we will use this temperary varible and use computed property for rendering data.
             }
         },
 
@@ -53,7 +56,6 @@
             logIn() {
                 console.log("trying to login....");
                 this.$store.dispatch('logIn', this.user).then(response=>{
-                    //todo check if logged successfull or not.....
                     if(response.code==1) {
                         notification(this, "Success! logged in..");
                         this.$router.push("/dashboard");

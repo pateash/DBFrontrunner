@@ -1,112 +1,110 @@
 <template>
     <div>
         <Hero message="Following table contains trade information" title="Trader Dashboard"></Hero>
-            {{user}}
+        <!--SECURITIES-->
         <section class="container" style="margin-top: 2em">
-            <b-table
-                    :data="data"
-                    :loading="loading"
+                        <h1 class="title" style="text-align: left">Place Order</h1>
+            <b-table :data="securityData" :columns="securityColumns"></b-table>
+        </section>
 
-                    paginated
-                    backend-pagination
-                    :total="total"
-                    :per-page="perPage"
-                    @page-change="onPageChange"
 
-                    backend-sorting
-                    :default-sort-direction="defaultSortOrder"
-                    :default-sort="[sortField, sortOrder]"
-                    @sort="onSort">
-
-                <template slot-scope="props">
-                    <b-table-column field="original_title" label="Title" sortable>
-                        {{ props.row.original_title }}
-                    </b-table-column>
-
-                    <b-table-column field="vote_average" label="Vote Average" numeric sortable>
-    <span class="tag" :class="type(props.row.vote_average)">
-        {{ props.row.vote_average }}
-    </span>
-                    </b-table-column>
-
-                    <b-table-column field="vote_count" label="Vote Count" numeric sortable>
-                        {{ props.row.vote_count }}
-                    </b-table-column>
-
-                    <b-table-column field="release_date" label="Release Date" sortable centered>
-                        {{ props.row.release_date ? new Date(props.row.release_date).toLocaleDateString() : '' }}
-                    </b-table-column>
-
-                    <b-table-column label="Overview" width="500">
-                        {{ props.row.overview | truncate(80) }}
-                    </b-table-column>
-                </template>
-            </b-table>
+        <!--ORDERS-->
+        <section class="container" style="margin-top: 2em">
+            <h1 class="title" style="text-align: left">Trade History</h1>
+            <b-table :data="orderData" :columns="orderColumns"></b-table>
         </section>
     </div>
 </template>
 
 <script>
     import Hero from "../Hero";
-    import axios from 'axios';
+    import notification from "../../services/notification";
     export default {
         components:{Hero},
         data() {
             return {
                 user:{},
-                data: [],
-                total: 0,
-                loading: false,
-                sortField: 'vote_count',
-                sortOrder: 'desc',
-                defaultSortOrder: 'desc',
-                page: 1,
-                perPage: 20
+                orderData: [],
+                orderColumns: [
+                    {
+                        field: "clientname",
+                        label: 'Client Name',
+                    },
+                    {
+                        field: 'security',
+                        label: 'Security Name',
+                    },
+                    {
+                        field: 'isinno',
+                        label: 'ISIN no.',
+                    },
+                    {
+                        field: 'tradedate',
+                        label: 'Trading Data',
+                    },
+                    {
+                        field: 'quantity',
+                        label: 'Quantity',
+                        centered: true
+                    },
+                    {
+                        field: 'tradetype',
+                        label: 'Trade Type',
+                    },
+                    {
+                        field: 'limitprice',
+                        label: 'Limit Price',
+                    },
+                    {
+                        field: 'direction',
+                        label: "Direction",
+                    },
+                    {
+                        field: 'value',
+                        label: "Value",
+                    },
+
+                ],
+                securityData:[],
+                securityColumns:[]
             }
         },
+
         methods: {
             /*
              * Load async data
              */
             loadAsyncData() {
-                const params = [
-                    'api_key=bb6f51bef07465653c3e553d6ab161a8',
-                    'language=en-US',
-                    'include_adult=false',
-                    'include_video=false',
-                    `sort_by=${this.sortField}.${this.sortOrder}`,
-                    `page=${this.page}`
-                ].join('&');
+                notification(this,"Fetching data...");
 
-                this.loading = true
-                axios.get(`https://api.themoviedb.org/3/discover/movie?${params}`)
-                    .then(({ data }) => {
-                        // api.themoviedb.org manage max 1000 pages
-                        this.data = []
-                        let currentTotal = data.total_results
-                        if (data.total_results / this.perPage > 1000) {
-                            currentTotal = this.perPage * 1000
-                        }
-                        this.total = currentTotal
-                        data.results.forEach((item) => {
-                            item.release_date = item.release_date.replace(/-/g, '/')
-                            this.data.push(item)
-                        })
-                        this.loading = false
+
+                //todo: start from here by asking goutham about the end points of getting securities
+                this.$store.dispatch('getSecurities',this.$store.getters.getUser)
+                    .then(data=>{
+                        console.log(data);
+                        this.orderData=data;
                     })
-                    .catch((error) => {
-                        this.data = []
-                        this.total = 0
-                        this.loading = false
-                        throw error
+                    .catch(error=>{
+
+                    });
+
+                this.$store.dispatch('getOrders',this.$store.getters.getUser)
+                    .then(data=>{
+                        console.log(data);
+                        this.orderData=data;
                     })
+                    .catch(error=>{
+
+                    });
+
+
             },
             /*
              * Handle page-change event
              */
             onPageChange(page) {
                 this.page = page
-                this.loadAsyncData()
+                this.loadAsyncData();
             },
             /*
              * Handle sort event
@@ -138,14 +136,14 @@
                 return value.length > length
                     ? value.substr(0, length) + '...'
                     : value
-            }
+            },
         },
 
         created() {
             this.loadAsyncData();
             //if not loggedin then go back to login page
             if (!this.$store.getters.isLoggedIn) {
-                console.log("not logged in dashboard");
+                notification(this,"Please login to continue to dashboard..");
                 //and go to dashboard
                 this.$router.push("/");
             } else {

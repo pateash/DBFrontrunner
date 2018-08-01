@@ -12,7 +12,9 @@ const state={
         loggedIn:false,
         id:'',
         name:'',
-        password:''
+        password:'',
+        orders:[],
+        securities:[]
     },
     admin:{
         loggedIn:false,
@@ -34,50 +36,84 @@ const getters={
     },
     getAdmin(state){
         return state.admin;
-    }
+    },
 };
 
 
-const actions={
-    logIn({commit},{id,password}){
-        return new Promise((resolve,reject)=>{
-            axios.post("/users/login",{
-                'id':id,'password':password
+const actions= {
+    logIn({commit}, {id, password}) {
+        return new Promise((resolve, reject) => {
+            axios.post("/users/login", {
+                'id': id, 'password': password
             })
-                .then((response)=>{
-                    commit('logIn',response.data);
-                        return resolve(response.data);//successfully logged in
+                .then((response) => {
+                    commit('logIn', response.data);
+                    return resolve(response.data);//successfully logged in
                 })
-                .catch((error)=>{
+                .catch((error) => {
                     console.error(error);
                     return reject(error); //can't logIn
                 });
         })
     },
-    logOut({commit}){
+    logOut({commit}) {
         commit('logOut');
         return true;
     },
-
-    adminLogIn({commit},{id,password}){
-        return new Promise((resolve,reject)=>{
-            axios.post("/admin/login",{
-                'id':id,'password':password
+    adminLogIn({commit}, {id, password}) {
+        return new Promise((resolve, reject) => {
+            axios.post("/admin/login", {
+                'id': id, 'password': password
             })
-                .then((response)=>{
-                    commit('adminLogIn',response.data);
+                .then((response) => {
+                    commit('adminLogIn', response.data);
                     return resolve(response.data);//successfully logged in
                 })
-                .catch((error)=>{
+                .catch((error) => {
                     console.error(error);
                     return reject(error); //can't logIn
                 });
         })
     },
-    adminLogOut({commit}){
+    adminLogOut({commit}) {
         commit('adminLogOut');
         return true;
+    },
+
+// order related functions
+    getOrders({commit}, {id}) {
+        return new Promise((resolve, reject) => {
+            axios.post("/users/orders", {
+                'brokerid': id,
+            })
+                .then((response) => {
+                    console.log(response.data);
+                    commit("updateOrders", response.data);
+                    return resolve(response.data);//successfully logged in
+                })
+                .catch((error) => {
+                    return reject(error); //can't get orders
+                });
+        });
+    },
+
+    //security related functions
+      getSecurities({commit}, {id}) {
+        return new Promise((resolve, reject) => {
+            axios.post("/users/securities", {
+                'brokerid': id,
+            })
+                .then((response) => {
+                    console.log(response.data);
+                    commit("updateSecurities", response.data);
+                    return resolve(response.data);//successfully logged in
+                })
+                .catch((error) => {
+                    return reject(error); //can't get orders
+                });
+        });
     }
+
 };
 
 const mutations={
@@ -108,6 +144,13 @@ const mutations={
             password:''
         });
         console.log("logged Out successfully");
+    },
+
+    updateOrders(state,payload){
+        state.user.orders=Object.assign({},state.user.orders,payload);
+    },
+    updateSecurities(state,payload){
+        state.user.securitiess=Object.assign({},state.user.securities,payload);
     }
 };
 

@@ -53,7 +53,6 @@
             logIn() {
                 console.log("admin trying to login....");
                 this.$store.dispatch('adminLogIn', this.admin).then(response=>{
-                    //todo check if logged successfull or not.....
                     if(response.code==1) {
                         notification(this, "Success! logged in..");
                         this.$router.push("/compliance/dashboard");
