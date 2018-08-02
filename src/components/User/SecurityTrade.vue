@@ -122,15 +122,14 @@
              option to buy or sell
              */
 
-            //todo uncomment these lines to limit this page to user only
-            // //if not loggedin then go back to login page
-            // if (!this.$store.getters.isLoggedIn) {
-            //     notification(this,"Please login to continue to trading..");
-            //     //and go to dashboard
-            //     this.$router.push("/");
-            // } else {
-            //     console.log("Logged in");
-            // }
+            //if not loggedin then go back to login page
+            if (!this.$store.getters.isLoggedIn) {
+                notification(this,"Please login to continue to trading..");
+                //and go to dashboard
+                this.$router.push("/");
+            } else {
+                console.log("Logged in");
+            }
         },
         mounted(){
             setInterval(()=>{
