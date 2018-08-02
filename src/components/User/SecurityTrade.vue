@@ -5,8 +5,6 @@
 
 
         <section class="section">
-
-
             <div class="columns">
                 <div class="column is-two-thirds">
                     <div class="columns is-mobile">
@@ -30,8 +28,8 @@
 
                     <div class="columns is-mobile">
                         <div class="column is-half is-offset-one-quarter">
-                            <h1 class="title" style="text-align: left">Total Amount &#8377;=</h1>
-                            <h2 class="subtitle"> {{totalPrice}} </h2>
+                            <h1 class="subtitle" style="text-align: left">Total Amount </h1>
+                            <h2 class="title">&#8377; {{totalPrice}} </h2>
                         </div>
                     </div>
                     <div class="columns is-mobile">
