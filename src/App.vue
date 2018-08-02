@@ -1,8 +1,6 @@
 <template>
   <div id="app">
     <Header></Header>
-    {{$store.getters.getTime}}
-
       <router-view></router-view>
     <Footer></Footer>
   </div>

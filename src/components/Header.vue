@@ -20,6 +20,10 @@
 
         <div class="navbar-item">
 
+          <p class="tag is-primary" style="font-size:1.3em;">
+            <span><b>{{$store.getters.getTime[0]}}:{{$store.getters.getTime[1]}} AM</b></span>
+          </p>
+
           <!--if any of the admin and user is not logged in -->
           <div v-if="!isLoggedIn && !isAdminLoggedIn" class="field is-grouped">
             <p class="control">
@@ -40,42 +44,11 @@
 
           <!--if logged in as user-->
           <div v-else-if="isLoggedIn" class="field is-grouped">
-             <!--dropdown-->
-            <!--<div  class="field is-grouped">-->
-              <!--<div class="navbar-start">-->
-                <!--<div class="navbar-item has-dropdown is-hoverable">-->
-                  <!--<a class="navbar-link" href="/documentation/overview/start/">-->
-                    <!--Limits-->
-                  <!--</a>-->
-                  <!--<div class="navbar-dropdown is-boxed">-->
-                    <!--<a class="navbar-item" href="/documentation/overview/start/">-->
-                      <!--Overview-->
-                    <!--</a>-->
-                    <!--<a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">-->
-                      <!--Modifiers-->
-                    <!--</a>-->
-                    <!--<a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">-->
-                      <!--Columns-->
-                    <!--</a>-->
-                    <!--<a class="navbar-item" href="https://bulma.io/documentation/layout/container/">-->
-                      <!--Layout-->
-                    <!--</a>-->
-                    <!--<a class="navbar-item" href="https://bulma.io/documentation/form/general/">-->
-                      <!--Form-->
-                    <!--</a>-->
-                    <!--<hr class="navbar-divider">-->
-                    <!--<a class="navbar-item" href="https://bulma.io/documentation/elements/box/">-->
-                      <!--Elements-->
-                    <!--</a>-->
-                    <!--<a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">-->
-                      <!--Components-->
-                    <!--</a>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
+            <p class="tag" style="font-size:1.3em;">
+              <span> Hello, <b>{{$store.getters.getUser.name}}</b></span>
+            </p>
 
-            <!---->
+
             <p class="control">
               <a class="bd-tw-button button" @click="logOut">
                 <span> Trader Logout</span>
@@ -85,40 +58,6 @@
 
           <!--if admin is logged in-->
           <div v-else class="field is-grouped">
-             <!--dropdown-->
-            <!--<div  class="field is-grouped">-->
-              <!--<div class="navbar-start">-->
-                <!--<div class="navbar-item has-dropdown is-hoverable">-->
-                  <!--<a class="navbar-link" href="/documentation/overview/start/">-->
-                    <!--Limits-->
-                  <!--</a>-->
-                  <!--<div class="navbar-dropdown is-boxed">-->
-                    <!--<a class="navbar-item" href="/documentation/overview/start/">-->
-                      <!--Overview-->
-                    <!--</a>-->
-                    <!--<a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">-->
-                      <!--Modifiers-->
-                    <!--</a>-->
-                    <!--<a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">-->
-                      <!--Columns-->
-                    <!--</a>-->
-                    <!--<a class="navbar-item" href="https://bulma.io/documentation/layout/container/">-->
-                      <!--Layout-->
-                    <!--</a>-->
-                    <!--<a class="navbar-item" href="https://bulma.io/documentation/form/general/">-->
-                      <!--Form-->
-                    <!--</a>-->
-                    <!--<hr class="navbar-divider">-->
-                    <!--<a class="navbar-item" href="https://bulma.io/documentation/elements/box/">-->
-                      <!--Elements-->
-                    <!--</a>-->
-                    <!--<a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">-->
-                      <!--Components-->
-                    <!--</a>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
 
             <!---->
             <p class="control">

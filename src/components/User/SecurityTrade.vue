@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <Hero message="Fill following information to continue" :title="capitalize(tradeType)+' '+security.symbol+' shares'"></Hero>
+        <Hero message="Fill following information to continue" :title="capitalize(tradeType)+' '+security.symbol+' Shares'"></Hero>
 
 
         <section class="section">
@@ -102,18 +102,21 @@
                 return string.charAt(0).toUpperCase() + string.slice(1);
             },
             trade(){
-                //todo: do this request as soon as goutham changes price attribute it....
                 axios.post("/users/orders/execute",this.security)
                     .then(({data})=>{
                         if(data.code==2){
                             notification(this,"Variance Limit Exceed, Flagged to compliance...","error");
                         }else if(data.code==1){
-                            this.$store.dispatch('updateLimits',)
+                            this.$store.dispatch('updateLimits',).then((response)=>{
+                            //todo update limits when data comes
+                                console.log("Limit comes here");
+                                console.log(data);
+                                console.log(response);
 
-                                    limits:[
-            {sector: '...', sectorlimit: '...'},
-            {sector: '...', sectorlimit: ''}
-        ],
+                            })
+                                .catch(error=>{
+                                console.log(error);
+                            });
                             notification(this,"Order Executed Successfully...");
                         }else{
                             notification(this,"Your Sector Limit exceeded...");
@@ -126,12 +129,6 @@
             }
         },
         created(){
-            /*
-            ¡todo continue from here, wehave to restrict access if not loggedin
-             and then have to also make same thing for securitySell
-             ask goutham about security api end for showing all security and providing them
-             option to buy or sell
-             */
 
             if(this.$route.params.security==undefined || this.$route.params.security=="undefined") {
                 notification(this, "Please click on Buy or Sell from Dashboard");
