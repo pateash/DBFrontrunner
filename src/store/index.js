@@ -128,8 +128,7 @@ const actions= {
                 });
         });
     },
-    updateLimits({commit},data){
-        console.log("updateLimit-> action");
+    updateLimits({commit},{data}){
         return new Promise((resolve,reject)=>{
             commit("updateLimits",data);
             return resolve(true);
@@ -191,9 +190,11 @@ const mutations={
         state.user.securitiess=Object.assign({},state.user.securities,payload);
     },
     updateLimits(state,payload){
-        console.log("update limits");
-        console.log("updateLimit-> action");
         state.user.limits=payload;
+        console.log("new limits");
+        console.log(state.user.limits);
+        console.log(payload);
+
     }
 };
 

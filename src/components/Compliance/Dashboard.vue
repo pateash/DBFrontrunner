@@ -1,11 +1,23 @@
 <template>
     <div>
         <Hero message="Following table contains Flagged Trade, you have to verify the trade..." title="Compliance Dashboard"></Hero>
-        <!--ORDERS-->
+        <!--flaged ORDERS-->
         <section class="container" style="margin-top: 2em">
-            <h1 class="title" style="text-align: left">All Trade History</h1>
+            <h1 class="title" style="text-align: left">Flagged Trade History
+                <span class="tag is-danger" style="font-size:0.5em">Variance Limit Exceed</span>
+            </h1>
+            <b-table :data="flaggedOrdersData"  paginated
+                     per-page="12" :columns="flaggedOrdersColumns"></b-table>
+        </section>
+
+        <!--ALL ORDERS-->
+        <section class="container" style="margin-top: 2em">
+            <h1 class="title" style="text-align: left">All Trade History
+                <span class="tag is-warning" style="font-size:0.5em">Sorted Chronologically</span>
+
+            </h1>
             <b-table :data="ordersData"  paginated
-        per-page="12" :columns="ordersColumns"></b-table>
+                     per-page="12" :columns="ordersColumns"></b-table>
         </section>
     </div>
 </template>
@@ -60,6 +72,47 @@
                     },
 
                 ],
+                flaggedOrdersData: [],
+                flaggedOrdersColumns: [
+                    {
+                        field: "clientname",
+                        label: 'Client Name',
+                    },
+                    {
+                        field: 'security',
+                        label: 'Security Name',
+                    },
+                    {
+                        field: 'isinno',
+                        label: 'ISIN no.',
+                    },
+                    {
+                        field: 'tradedate',
+                        label: 'Trading Data',
+                    },
+                    {
+                        field: 'quantity',
+                        label: 'Quantity',
+                        centered: true
+                    },
+                    {
+                        field: 'tradetype',
+                        label: 'Trade Type',
+                    },
+                    {
+                        field: 'limitprice',
+                        label: 'Limit Price',
+                    },
+                    {
+                        field: 'direction',
+                        label: "Direction",
+                    },
+                    {
+                        field: 'value',
+                        label: "Value",
+                    },
+
+                ],
 
             }
         },
@@ -72,6 +125,17 @@
 
                 this.loading=true;
 
+
+                //todo update url for flagged orders
+                axios.get("/orders")
+                    .then(({data})=>{
+                        console.log(data);
+                        this.flaggedOrdersData=data;
+                    })
+                    .catch(error=>{
+                        notification(this,"Could not able to fetch Orders data...")
+                        console.log(error);
+                    });
                 axios.get("/orders")
                     .then(({data})=>{
                         console.log(data);
@@ -81,6 +145,8 @@
                         notification(this,"Could not able to fetch Orders data...")
                         console.log(error);
                     });
+
+
 
             },
 

@@ -6,7 +6,10 @@
             <div class="columns">
                 <div class="column is-two-thirds">
                     <section class="section" >
-                        <h1 class="title" style="text-align: left">Trade Security</h1>
+                        <h1 class="title" style="text-align: left">Trade Securities
+                            <span class="tag" style="font-size:0.5em">Custom Sorted</span>
+
+                        </h1>
                         <b-table
                                 :data="securityData"
                                 :loading="loading"
@@ -51,7 +54,10 @@
                     </section>
 
                     <section class="section" style="margin-top: 2em">
-                        <h1 class="title" style="text-align: left">Trade History</h1>
+                        <h1 class="title" style="text-align: left">Trade History
+                            <span class="tag is-warning" style="font-size:0.5em">Sorted Chronologically</span>
+
+                        </h1>
                         <b-table :data="orderData"  paginated
                                  per-page="6" :columns="orderColumns"></b-table>
                     </section>

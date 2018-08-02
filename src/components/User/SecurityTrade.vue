@@ -107,16 +107,13 @@
                         if(data.code==2){
                             notification(this,"Variance Limit Exceed, Flagged to compliance...","error");
                         }else if(data.code==1){
-                            this.$store.dispatch('updateLimits',).then((response)=>{
-                            //todo update limits when data comes
-                                console.log("Limit comes here");
-                                console.log(data);
-                                console.log(response);
-
-                            })
-                                .catch(error=>{
-                                console.log(error);
-                            });
+                            // this.$store.dispatch('updateLimits',data).then((response)=>{
+                            // //todo update limits when data comes
+                            //     console.log(data);
+                            // })
+                            //     .catch(error=>{
+                            //     console.log(error);
+                            // });
                             notification(this,"Order Executed Successfully...");
                         }else{
                             notification(this,"Your Sector Limit exceeded...");
