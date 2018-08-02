@@ -41,7 +41,7 @@
                                     </a>
                                 </b-table-column>
                                 <b-table-column label="Sell Trade">
-                                    <a class="tag is-info" style="font-size:1em" @click="trade('S')">
+                                    <a class="tag is-info" style="font-size:1em" @click="trade('S',props.row.symbol)">
                                         &nbsp;&nbsp;&nbsp;Sell&nbsp;&nbsp;&nbsp;
                                     </a>
                                 </b-table-column>
@@ -63,7 +63,7 @@
                         <div class="notification is-primary">
                             <!--name of sector-->
                             <p class="subtitle" style="text-align: left">{{sectors[0].sector}}
-                                <b><i v-if="sectors[1].sectorlimit==''" class="fas fa-spinner fa-spin"></i></b>
+                                <b><i v-if="sectors[1].sectorlimit=='...'" class="fas fa-spinner fa-spin"></i></b>
                             </p>
                             <h1 class="title" style="text-align: left"> &#8377; {{sectors[0].sectorlimit}}</h1>
                         </div>

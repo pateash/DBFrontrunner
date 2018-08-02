@@ -121,8 +121,14 @@
              option to buy or sell
              */
 
+            if(this.$route.params.security==undefined || this.$route.params.security=="undefined") {
+                notification(this, "Please click on Buy or Sell from Dashboard");
+                //and go to dashboard
+                this.$router.push("/dashboard");
+            }
+
             //if not loggedin then go back to login page
-            if (!this.$store.getters.isLoggedIn) {
+            if (!this.$store.getters.isLoggedIn ) {
                 notification(this,"Please login to continue to trading..");
                 //and go to dashboard
                 this.$router.push("/");
@@ -130,21 +136,21 @@
                 console.log("Logged in");
             }
             this.sideBarTitle="Updating";
-              axios.post("/verify/currentprice",{
-                        "securityid":"TCS",
-                        "hours":10,
-                        "minutes":0
-                    })
-                        .then(({data})=>{
-                            if(data.code==1){
-                                this.sideBarTitle="Current Price";
-                                this.sideBarValue=data.description;
-                            }
-                        })
-                        .catch(error=>{
-                            console.log(error);
-                            notification(this,"Error Updating Price");
-                        });
+            axios.post("/verify/currentprice",{
+                "securityid":"TCS",
+                "hours":10,
+                "minutes":0
+            })
+                .then(({data})=>{
+                    if(data.code==1){
+                        this.sideBarTitle="Current Price";
+                        this.sideBarValue=data.description;
+                    }
+                })
+                .catch(error=>{
+                    console.log(error);
+                    notification(this,"Error Updating Price");
+                });
         },
         mounted(){
             setInterval(()=>{
@@ -169,7 +175,7 @@
                         });
 
                 },2000);
-            },8000);
+            },6000);
 
         }
 
