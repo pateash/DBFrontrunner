@@ -3,49 +3,67 @@
     <div>
         <Hero message="Fill following information to continue" :title="capitalize(tradeType)+' '+security.symbol+' shares'"></Hero>
 
+
         <section class="section">
 
-            <div class="columns is-mobile">
-                <div class="column is-half is-offset-one-quarter">
-                    <h1 class="title" style="text-align: left">Trade Information</h1>
-                </div>
-            </div>
+
             <div class="columns">
-                <div class="column is-one-fifth is-offset-one-quarter">
-                    <b-field label="Quantity">
-                        <b-input maxlength="30" type="number" v-model="security.quantity" required></b-input>
-                    </b-field>
+                <div class="column is-two-thirds">
+                    <div class="columns is-mobile">
+                        <div class="column is-half is-offset-one-quarter">
+                            <h1 class="title" style="text-align: left">Trade Information</h1>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column is-one-fifth is-offset-one-quarter">
+                            <b-field label="Quantity">
+                                <b-input maxlength="30" type="number" v-model="security.quantity" required></b-input>
+                            </b-field>
+                        </div>
+                        <div class="column is-one-fifth ">
+                            <b-field label="Price">
+                                <b-input maxlength="30" required type="number" v-model="security.price"></b-input>
+                            </b-field>
+
+                        </div>
+                    </div>
+
+                    <div class="columns is-mobile">
+                        <div class="column is-half is-offset-one-quarter">
+                            <h1 class="title" style="text-align: left">Total Amount &#8377;=</h1>
+                            <h2 class="subtitle"> {{totalPrice}} </h2>
+                        </div>
+                    </div>
+                    <div class="columns is-mobile">
+                        <div class="column is-half is-offset-6">
+                            <button class="button is-primary is-right" autofocus slot="trigger" @click="trade">
+                                {{capitalize($route.params.tradeType)}} Now
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="column is-one-fifth ">
-                    <b-field label="Price">
-                        <b-input maxlength="30" required type="number" v-model="security.price"></b-input>
-                    </b-field>
+                <div class="column is-one-thirds">
+                    <div class="notification is-primary">
+                        <p class="subtitle">{{sideBarTitle}}
+                            <b><i v-if="sideBarValue=='...'" class="fas fa-spinner fa-spin"></i></b>                        </p>
+                        <h1 class="title" style="text-align: left"> &#8377; {{sideBarValue}}</h1>
+                    </div>
 
                 </div>
             </div>
-
-            <div class="columns is-mobile">
-                <div class="column is-half is-offset-one-quarter">
-                    <h1 class="title" style="text-align: left">Total Amount  &#8377;=</h1>
-                    <h2 class="subtitle"> {{totalPrice}} </h2>
-                </div>
-            </div>
-            <div class="columns is-mobile">
-                <div class="column is-half is-offset-6">
-                    <button class="button is-primary is-right"  autofocus  slot="trigger" @click="trade">{{capitalize($route.params.tradeType)}} Now</button>
-                </div>
-            </div>
-             <!--<div class="columns is-mobile">-->
-                <!--<div class="column is-half is-offset-8">-->
-                    <!--<button class="button is-primary is-right"  autofocus @click="logIn" slot="trigger">Log In</button>-->
-                <!--</div>-->
+            <!--<div class="columns is-mobile">-->
+            <!--<div class="column is-half is-offset-8">-->
+            <!--<button class="button is-primary is-right"  autofocus @click="logIn" slot="trigger">Log In</button>-->
+            <!--</div>-->
             <!--</div>-->
         </section>
     </div>
 </template>
 
 <script>
+    import axios from "axios";
     import Hero from "@/components/Hero";
+    import notification from "../../services/notification";
     export default {
         name: "SecurityBuy",
         data(){
@@ -62,6 +80,8 @@
                     direction:this.$route.params.tradeType[0].toUpperCase(),
                     isinno:"INEDB2808B"+(parseInt(Math.random()*1000000))
                 },
+                sideBarTitle:"Current Price",
+                sideBarValue:'...',
             }
         },
         computed:{
@@ -113,10 +133,31 @@
             // }
         },
         mounted(){
-            // setInterval(()=>{
-            //     // axios.post("/")
-            //
-            // },5000);
+            setInterval(()=>{
+                console.log("doing it...");
+                this.sideBarTitle="Updating";
+                this.sideBarValue="...";
+
+                setTimeout(()=>{
+                    axios.post("/verify/currentprice",{
+                        "securityid":"TCS",
+                        "hours":10,
+                        "minutes":0
+                    })
+                        .then(({data})=>{
+                            if(data.code==1){
+                                this.sideBarTitle="Current Price";
+                                this.sideBarValue=data.description;
+                            }
+                        })
+                        .catch(error=>{
+                            console.log(error);
+                            notification(this,"Error Updating Price");
+                        });
+
+                },2000);
+            },60000);
+
         }
 
     }
