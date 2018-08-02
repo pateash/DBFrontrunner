@@ -7,7 +7,6 @@
                 <div class="column is-two-thirds">
                     <section class="section" >
                         <h1 class="title" style="text-align: left">Trade Security</h1>
-
                         <b-table
                                 :data="securityData"
                                 :loading="loading"
@@ -53,7 +52,8 @@
 
                     <section class="section" style="margin-top: 2em">
                         <h1 class="title" style="text-align: left">Trade History</h1>
-                        <b-table :data="orderData" :columns="orderColumns"></b-table>
+                        <b-table :data="orderData"  paginated
+                                 per-page="6" :columns="orderColumns"></b-table>
                     </section>
                 </div>
                 <div class="column is-one-thirds">

@@ -20,7 +20,7 @@
 
         <div class="navbar-item">
 
-          <p class="tag is-primary" style="font-size:1.3em;">
+          <p class="tag" :class="{'is-primary':!isAdminSite,'is-info':isAdminSite}" style="font-size:1.3em;">
             <span><b>{{$store.getters.getTime[0]}}:{{$store.getters.getTime[1]}} AM</b></span>
           </p>
 
@@ -162,5 +162,8 @@
   }
   .control{
     font-weight: bold;
+  }
+  p{
+    margin:0em 0.4em;
   }
 </style>

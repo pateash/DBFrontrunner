@@ -3,8 +3,9 @@
         <Hero message="Following table contains Flagged Trade, you have to verify the trade..." title="Compliance Dashboard"></Hero>
         <!--ORDERS-->
         <section class="container" style="margin-top: 2em">
-            <h1 class="title" style="text-align: left">Trade History</h1>
-            <b-table :data="orderData" :columns="orderColumns"></b-table>
+            <h1 class="title" style="text-align: left">All Trade History</h1>
+            <b-table :data="ordersData"  paginated
+        per-page="12" :columns="ordersColumns"></b-table>
         </section>
     </div>
 </template>
@@ -12,13 +13,14 @@
 <script>
     import Hero from "../Hero";
     import axios from 'axios';
+    import notification from "../../services/notification";
     export default {
         components:{Hero},
         data() {
             return {
                 admin:{},
-                data: [],
-                columns: [
+                ordersData: [],
+                ordersColumns: [
                     {
                         field: "clientname",
                         label: 'Client Name',
@@ -66,8 +68,20 @@
              * Load async data
              */
             loadAsyncData() {
-               notification(this,"Fetching data...");
-               //todo complete this dashboard after asking goutham about the endpoint
+                notification(this,"Fetching data...");
+
+                this.loading=true;
+
+                axios.get("/orders")
+                    .then(({data})=>{
+                        console.log(data);
+                        this.ordersData=data;
+                    })
+                    .catch(error=>{
+                        notification(this,"Could not able to fetch Orders data...")
+                        console.log(error);
+                    });
+
             },
 
             /*
