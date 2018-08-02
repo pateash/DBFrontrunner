@@ -32,12 +32,12 @@
                     </b-table-column>
 
                     <b-table-column  label="Buy Trade">
-                        <a class="tag is-primary" style="font-size:1em" >
+                        <a class="tag is-primary" style="font-size:1em" @click="trade('B',props.row.symbol)">
                             &nbsp;&nbsp;&nbsp;Buy&nbsp;&nbsp;&nbsp;
                         </a>
                     </b-table-column>
                     <b-table-column  label="Sell Trade">
-                        <a class="tag is-info" style="font-size:1em" >
+                        <a class="tag is-info" style="font-size:1em" @click="trade('S')">
                             &nbsp;&nbsp;&nbsp;Sell&nbsp;&nbsp;&nbsp;
                         </a>
                     </b-table-column>
@@ -141,6 +141,13 @@
             /*
              * Load async data
              */
+            trade(direction,symbol){
+              if(direction=="B"){
+                this.$router.push("/orders/"+symbol+"/buy")
+              } else
+                  this.$router.push("/orders/"+symbol+"/sell")
+
+            },
             loadAsyncData() {
                 notification(this,"Fetching data...");
 
@@ -167,37 +174,7 @@
                     });
 
                 this.loading=false;
-
-
             },
-            /*
-             * Handle page-change event
-             */
-            onPageChange(page) {
-                this.page = page
-                this.loadAsyncData();
-            },
-            /*
-             * Handle sort event
-             */
-            onSort(field, order) {
-                this.sortField = field
-                this.sortOrder = order
-                this.loadAsyncData()
-            },
-            /*
-             * Type style in relation to the value
-             */
-            type(value) {
-                const number = parseFloat(value)
-                if (number < 6) {
-                    return 'is-danger'
-                } else if (number >= 6 && number < 8) {
-                    return 'is-warning'
-                } else if (number >= 8) {
-                    return 'is-success'
-                }
-            }
         },
         filters: {
             /**
