@@ -170,7 +170,7 @@ const mutations={
 
     updateTime(state){
         if(state.time[1]==59){
-            state.time[1]=0;
+            state.time[1]=15;
             state.time[0]++;
         }
 

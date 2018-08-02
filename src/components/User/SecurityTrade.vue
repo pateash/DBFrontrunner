@@ -43,7 +43,7 @@
                 <div class="column is-one-thirds">
                     <div class="notification is-primary">
                         <p class="subtitle">{{sideBarTitle}}
-                            <b><i v-if="sideBarValue=='...'" class="fas fa-spinner fa-spin"></i></b>
+                            <b><i v-if="loading" class="fas fa-spinner fa-spin"></i></b>
                         </p>
                         <h1 class="title" style="text-align: left"> &#8377; {{sideBarValue}}</h1>
                     </div>
@@ -80,6 +80,7 @@
                     hours:this.$store.getters.getTime[0],
                     minutes:this.$store.getters.getTime[1]
                 },
+                loading:true,
                 sideBarTitle:"Current Price",
                 sideBarValue:'...',
             }
@@ -101,12 +102,22 @@
                 return string.charAt(0).toUpperCase() + string.slice(1);
             },
             trade(){
-
                 //todo: do this request as soon as goutham changes price attribute it....
                 axios.post("/users/orders/execute",this.security)
-                    .then(response=>{
-                        console.log(response);
+                    .then(({data})=>{
+                        if(data.code==2){
+                            notification(this,"Variance Limit Exceed, Flagged to compliance...","error");
+                        }else if(data.code==1){
+                            this.$store.dispatch('updateLimits',)
 
+                                    limits:[
+            {sector: '...', sectorlimit: '...'},
+            {sector: '...', sectorlimit: ''}
+        ],
+                            notification(this,"Order Executed Successfully...");
+                        }else{
+                            notification(this,"Your Sector Limit exceeded...");
+                        }
                     })
                     .catch(error=>{
                         console.log(error);
@@ -138,9 +149,9 @@
             }
             this.sideBarTitle="Updating";
             axios.post("/verify/currentprice",{
-                "securityid":"TCS",
-                "hours":10,
-                "minutes":0
+                "securityid": this.$route.params.security,
+                "hours":this.$store.getters.getTime[0],
+                "minutes":this.$store.getters.getTime[1]
             })
                 .then(({data})=>{
                     if(data.code==1){
@@ -156,18 +167,18 @@
         mounted(){
             setInterval(()=>{
                 this.sideBarTitle="Updating";
-                this.sideBarValue="...";
-
+                this.loading=true;
                 setTimeout(()=>{
                     axios.post("/verify/currentprice",{
-                        "securityid":"TCS",
-                        "hours":this.$store.getters.getTime()[0],
-                        "minutes":this.$store.getters.getTime()[1]
+                        "securityid":this.$route.params.security,
+                        "hours":this.$store.getters.getTime[0],
+                        "minutes":this.$store.getters.getTime[1]
                     })
                         .then(({data})=>{
                             if(data.code==1){
                                 this.sideBarTitle="Current Price";
                                 this.sideBarValue=data.description;
+                                this.loading=false;
                             }
                         })
                         .catch(error=>{
