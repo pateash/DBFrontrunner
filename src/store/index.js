@@ -17,7 +17,11 @@ const state={
         name:'',
         password:'',
         orders:[],
-        securities:[]
+        securities:[],
+        limits:[
+            {sector: '...', sectorlimit: '...'},
+            {sector: '...', sectorlimit: ''}
+        ],
     },
     admin:{
         loggedIn:false,
@@ -115,6 +119,13 @@ const actions= {
                     return reject(error); //can't get orders
                 });
         });
+    },
+    updateLimits({commit},data){
+        console.log("updateLimit-> action");
+        return new Promise((resolve,reject)=>{
+            commit("updateLimits",data);
+            return resolve(true);
+        })
     }
 
 };
@@ -154,6 +165,11 @@ const mutations={
     },
     updateSecurities(state,payload){
         state.user.securitiess=Object.assign({},state.user.securities,payload);
+    },
+    updateLimits(state,payload){
+        console.log("update limits");
+        console.log("updateLimit-> action");
+        state.user.limits=payload;
     }
 };
 

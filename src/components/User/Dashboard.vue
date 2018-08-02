@@ -232,25 +232,31 @@
                 console.log("Logged in");
             }
 
-              this.sectors[0].sector = "Updating";
-                this.sectors[1].sector = "Updating";
+            this.sectors[0].sector = "Updating";
+            this.sectors[1].sector = "Updating";
 
-                this.sectors[0].sectorlimit = "...";
-                this.sectors[1].sectorlimit = "...";
+            this.sectors[0].sectorlimit = "...";
+            this.sectors[1].sectorlimit = "...";
 
-                setTimeout(() => {
-                    axios.post("/users/limits", {
-                        'brokerid': this.$store.getters.getUser.id
-                    })
-                        .then(({data}) => {
-                            this.sectors = data;
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            notification(this, "Error getting sector limits");
+            setTimeout(() => {
+                axios.post("/users/limits", {
+                    'brokerid': this.$store.getters.getUser.id
+                })
+                    .then(({data}) => {
+                        this.sectors = data;
+                        this.$store.dispatch('updateLimits',data)
+                            .then(response=>{
+                                   console.log("update Limits updated");
+                            }).catch(error=>{
+                            console.log("ERROR"+error);
                         });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        notification(this, "Error getting sector limits");
+                    });
 
-                }, 2000);
+            }, 2000);
         },
         mounted() {
             // setInterval(() => {
