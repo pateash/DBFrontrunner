@@ -1,7 +1,6 @@
 <template>
     <div>
         <Hero message="Following table contains Flagged Trade, you have to verify the trade..." title="Compliance Dashboard"></Hero>
-        {{admin}}
         <!--ORDERS-->
         <section class="container" style="margin-top: 2em">
             <h1 class="title" style="text-align: left">Trade History</h1>

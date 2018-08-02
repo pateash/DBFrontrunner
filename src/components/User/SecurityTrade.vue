@@ -43,7 +43,8 @@
                 <div class="column is-one-thirds">
                     <div class="notification is-primary">
                         <p class="subtitle">{{sideBarTitle}}
-                            <b><i v-if="sideBarValue=='...'" class="fas fa-spinner fa-spin"></i></b>                        </p>
+                            <b><i v-if="sideBarValue=='...'" class="fas fa-spinner fa-spin"></i></b>
+                        </p>
                         <h1 class="title" style="text-align: left"> &#8377; {{sideBarValue}}</h1>
                     </div>
 
@@ -128,6 +129,22 @@
             } else {
                 console.log("Logged in");
             }
+            this.sideBarTitle="Updating";
+              axios.post("/verify/currentprice",{
+                        "securityid":"TCS",
+                        "hours":10,
+                        "minutes":0
+                    })
+                        .then(({data})=>{
+                            if(data.code==1){
+                                this.sideBarTitle="Current Price";
+                                this.sideBarValue=data.description;
+                            }
+                        })
+                        .catch(error=>{
+                            console.log(error);
+                            notification(this,"Error Updating Price");
+                        });
         },
         mounted(){
             setInterval(()=>{
