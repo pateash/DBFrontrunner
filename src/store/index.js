@@ -11,6 +11,7 @@ import createPersistedState from "vuex-persistedstate";
 
 
 const state={
+    time:[9,16],
     user:{
         loggedIn:false,
         id:'',
@@ -44,6 +45,9 @@ const getters={
     getAdmin(state){
         return state.admin;
     },
+    getTime(state){
+        return state.time;
+    }
 };
 
 
@@ -84,6 +88,10 @@ const actions= {
     },
     adminLogOut({commit}) {
         commit('adminLogOut');
+        return true;
+    },
+    updateTime({commit}) {
+        commit("updateTime");
         return true;
     },
 
@@ -160,6 +168,22 @@ const mutations={
         console.log("logged Out successfully");
     },
 
+    updateTime(state){
+        if(state.time[1]==59){
+            state.time[1]=0;
+            state.time[0]++;
+        }
+
+        if(state.time[0]==10){
+          state.time[0]=9;
+        }
+        else{
+            state.time[1]=state.time[1]+1;
+
+        }
+
+
+    },
     updateOrders(state,payload){
         state.user.orders=Object.assign({},state.user.orders,payload);
     },

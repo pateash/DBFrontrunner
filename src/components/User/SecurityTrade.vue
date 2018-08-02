@@ -72,12 +72,13 @@
                 security:{
                     symbol: this.$route.params.security,
                     quantity:0,
-
                     price:0,
                     brokerid:this.$store.getters.getUser.id,
                     clientname:this.$store.getters.getUser.name,
                     direction:this.$route.params.tradeType[0].toUpperCase(),
-                    isinno:"INEDB2808B"+(parseInt(Math.random()*1000000))
+                    isinno:"INEDB2808B"+(parseInt(Math.random()*1000000)),
+                    hours:this.$store.getters.getTime[0],
+                    minutes:this.$store.getters.getTime[1]
                 },
                 sideBarTitle:"Current Price",
                 sideBarValue:'...',
@@ -160,8 +161,8 @@
                 setTimeout(()=>{
                     axios.post("/verify/currentprice",{
                         "securityid":"TCS",
-                        "hours":10,
-                        "minutes":0
+                        "hours":this.$store.getters.getTime()[0],
+                        "minutes":this.$store.getters.getTime()[1]
                     })
                         .then(({data})=>{
                             if(data.code==1){

@@ -187,7 +187,6 @@
 
 
                 this.loading = true;
-                //todo: start from here by asking goutham about the end points of getting securities
                 this.$store.dispatch('getSecurities', this.$store.getters.getUser)
                     .then(data => {
                         console.clear();
@@ -195,7 +194,7 @@
                         this.securityData = data;
                     })
                     .catch(error => {
-
+                        console.log(error);
                     });
 
 
@@ -246,7 +245,7 @@
                         this.sectors = data;
                         this.$store.dispatch('updateLimits',data)
                             .then(response=>{
-                                   console.log("update Limits updated");
+                                console.log("update Limits updated");
                             }).catch(error=>{
                             console.log("ERROR"+error);
                         });

@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <Header></Header>
+    {{$store.getters.getTime}}
+
       <router-view></router-view>
     <Footer></Footer>
   </div>
@@ -17,6 +19,11 @@
             Header,
             Body,
             Footer
+        },
+        mounted(){
+            setInterval(()=>{
+                this.$store.dispatch("updateTime");
+            },5000)
         }
     }
 </script>
