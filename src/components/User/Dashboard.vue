@@ -3,12 +3,52 @@
         <Hero message="Following table contains trade information" title="Trader Dashboard"></Hero>
         <!--SECURITIES-->
         <section class="container" style="margin-top: 2em">
-                        <h1 class="title" style="text-align: left">Place Order</h1>
-            <b-table :data="securityData" :columns="securityColumns"></b-table>
+            <h1 class="title" style="text-align: left">Trade Security</h1>
+
+            <b-table
+                    :data="securityData"
+                    :loading="loading"
+            >
+
+                <template slot-scope="props">
+                    <b-table-column field="issnno" label="ISSN No." sortable>
+                        {{ props.row.isinno }}
+                    </b-table-column>
+                    <b-table-column field="companyname" label="Company Name" sortable>
+                        {{ props.row.companyname }}
+                    </b-table-column>
+                    <b-table-column field="sector" label="Sector" sortable>
+                        {{ props.row.sector }}
+                    </b-table-column>
+
+                    <b-table-column field="symbol" label="Trade Symbol" sortable>
+                        {{ props.row.symbol }}
+                    </b-table-column>
+                    <b-table-column field="marketlot" label="Market Lot" sortable>
+                        {{ props.row.marketlot }}
+                    </b-table-column>
+                    <b-table-column field="pricevariantlimit" label="Price Variant Limit" sortable>
+                        {{ props.row.pricevariantlimit }}
+                    </b-table-column>
+
+                    <b-table-column  label="Buy Trade">
+                        <a class="tag is-primary" style="font-size:1em" >
+                            &nbsp;&nbsp;&nbsp;Buy&nbsp;&nbsp;&nbsp;
+                        </a>
+                    </b-table-column>
+                    <b-table-column  label="Sell Trade">
+                        <a class="tag is-info" style="font-size:1em" >
+                            &nbsp;&nbsp;&nbsp;Sell&nbsp;&nbsp;&nbsp;
+                        </a>
+                    </b-table-column>
+
+
+                </template>
+            </b-table>
         </section>
 
 
-        <!--ORDERS-->
+
         <section class="container" style="margin-top: 2em">
             <h1 class="title" style="text-align: left">Trade History</h1>
             <b-table :data="orderData" :columns="orderColumns"></b-table>
@@ -24,6 +64,7 @@
         data() {
             return {
                 user:{},
+                loading:false,
                 orderData: [],
                 orderColumns: [
                     {
@@ -66,7 +107,33 @@
 
                 ],
                 securityData:[],
-                securityColumns:[]
+                securityColumns:[
+                    {
+                        field: "companyname",
+                        label: 'Company Name',
+                    },
+                    {
+                        field: "sector",
+                        label: 'Sector',
+                    },
+                    {
+                        field: "symbol",
+                        label: 'Trade Symbol',
+                    },
+                    {
+                        field: "issnno",
+                        label: 'ISIN no.',
+                    },
+                    {
+                        field: "marketlot",
+                        label: 'Market Lot',
+                    },
+                    {
+                        field: "pricevariantlimit",
+                        label: 'Price Variant Limit',
+                    },
+
+                ]
             }
         },
 
@@ -78,24 +145,28 @@
                 notification(this,"Fetching data...");
 
 
+                this.loading=true;
                 //todo: start from here by asking goutham about the end points of getting securities
                 this.$store.dispatch('getSecurities',this.$store.getters.getUser)
                     .then(data=>{
+                        console.clear();
                         console.log(data);
-                        this.orderData=data;
+                        this.securityData=data;
                     })
                     .catch(error=>{
 
                     });
+
 
                 this.$store.dispatch('getOrders',this.$store.getters.getUser)
                     .then(data=>{
-                        console.log(data);
                         this.orderData=data;
                     })
                     .catch(error=>{
 
                     });
+
+                this.loading=false;
 
 
             },
@@ -155,5 +226,7 @@
 </script>
 
 <style scoped>
-
+    a:hover{
+        text-decoration: none;
+    }
 </style>

@@ -87,7 +87,7 @@ const actions= {
                 'brokerid': id,
             })
                 .then((response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
                     commit("updateOrders", response.data);
                     return resolve(response.data);//successfully logged in
                 })

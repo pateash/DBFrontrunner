@@ -1,12 +1,12 @@
 
 <template>
     <div>
-        <Hero message="Fill following information to continue" title="Security Trade"></Hero>
+        <Hero message="Fill following information to continue" :title="capitalize(tradeType)+' '+security+' shares'"></Hero>
         <section class="section">
 
             <div class="columns is-mobile">
                 <div class="column is-half is-offset-one-quarter">
-                    <h1 class="title" style="text-align: left">{{tradeType}} Trade</h1>
+                    <h1 class="title" style="text-align: left">{{capitalize(tradeType)}} Trade</h1>
 
                     <b-field label="Trader Id">
                         <b-input maxlength="30" required ></b-input>
@@ -38,15 +38,24 @@
         name: "SecurityBuy",
         data(){
             return{
+                security:this.$route.params.security,
+                currentPrice:NaN
+
             }
         },
         computed:{
             tradeType(){
-                return this.$routes.params.tradeType
-            }
+                // console.log(this.$route.params);
+                return this.$route.params.tradeType
+            },
         },
         components:{
             Hero
+        },
+        methods:{
+            capitalize(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
         },
         created(){
             /*
@@ -65,13 +74,20 @@
             // } else {
             //     console.log("Logged in");
             // }
+        },
+        mounted(){
+            // setInterval(()=>{
+            //     // axios.post("/")
+            //
+            // },5000);
         }
+
     }
 </script>
 
 <style scoped>
 
-      .section{
+    .section{
         text-align: left;
     }
 </style>
