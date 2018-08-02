@@ -68,24 +68,9 @@
              */
             loadAsyncData() {
                notification(this,"Fetching data...");
-
                //todo complete this dashboard after asking goutham about the endpoint
             },
-            /*
-             * Handle page-change event
-             */
-            onPageChange(page) {
-                this.page = page
-                this.loadAsyncData()
-            },
-            /*
-             * Handle sort event
-             */
-            onSort(field, order) {
-                this.sortField = field
-                this.sortOrder = order
-                this.loadAsyncData()
-            },
+
             /*
              * Type style in relation to the value
              */
@@ -114,7 +99,6 @@
             this.loadAsyncData();
             //if not loggedin then go back to login page
             if (!this.$store.getters.isAdminLoggedIn) {
-                console.log("admin not logged in dashboard");
                 //and go to dashboard
                 this.$router.push("/compliance");
             } else {
