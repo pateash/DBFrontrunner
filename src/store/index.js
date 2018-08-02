@@ -7,6 +7,9 @@ axios.defaults.baseURL = 'http://localhost:7777';
 Vue.use(Vuex);
 
 
+import createPersistedState from "vuex-persistedstate";
+
+
 const state={
     user:{
         loggedIn:false,
@@ -98,7 +101,7 @@ const actions= {
     },
 
     //security related functions
-      getSecurities({commit}, {id}) {
+    getSecurities({commit}, {id}) {
         return new Promise((resolve, reject) => {
             axios.post("/users/securities", {
                 'brokerid': id,
@@ -159,5 +162,7 @@ export default new Vuex.Store({
     getters,
     actions,
     mutations,
+    plugins: [createPersistedState()]
+
 });
 

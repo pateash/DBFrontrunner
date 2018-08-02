@@ -134,7 +134,6 @@
         },
         mounted(){
             setInterval(()=>{
-                console.log("doing it...");
                 this.sideBarTitle="Updating";
                 this.sideBarValue="...";
 
