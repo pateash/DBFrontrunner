@@ -58,7 +58,9 @@
 
           <!--if admin is logged in-->
           <div v-else class="field is-grouped">
-
+            <p class="tag" style="font-size:1.3em;">
+              <span> Hello, <b>{{$store.getters.getAdmin.name}}</b></span>
+            </p>
             <!---->
             <p class="control">
               <a class="bd-tw-button button" @click="adminLogOut">
