@@ -1,34 +1,46 @@
 
 <template>
     <div>
-        <Hero message="Fill following information to continue" :title="capitalize(tradeType)+' '+security+' shares'"></Hero>
+        <Hero message="Fill following information to continue" :title="capitalize(tradeType)+' '+security.symbol+' shares'"></Hero>
+
         <section class="section">
 
             <div class="columns is-mobile">
                 <div class="column is-half is-offset-one-quarter">
-                    <h1 class="title" style="text-align: left">{{capitalize(tradeType)}} Trade</h1>
-
-                    <b-field label="Trader Id">
-                        <b-input maxlength="30" required ></b-input>
-                    </b-field>
-                    <b-field label="Password" >
-                        <b-input type="password"
-                                 password-reveal
-                                 maxlength="30"
-                                 required
-                        >
-                        </b-input>
+                    <h1 class="title" style="text-align: left">Trade Information</h1>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-one-fifth is-offset-one-quarter">
+                    <b-field label="Quantity">
+                        <b-input maxlength="30" type="number" v-model="security.quantity" required></b-input>
                     </b-field>
                 </div>
+                <div class="column is-one-fifth ">
+                    <b-field label="Price">
+                        <b-input maxlength="30" required type="number" v-model="security.price"></b-input>
+                    </b-field>
 
+                </div>
+            </div>
+
+            <div class="columns is-mobile">
+                <div class="column is-half is-offset-one-quarter">
+                    <h1 class="title" style="text-align: left">Total Amount  &#8377;=</h1>
+                    <h2 class="subtitle"> {{totalPrice}} </h2>
+                </div>
             </div>
             <div class="columns is-mobile">
-                <div class="column is-half is-offset-8">
-                    <button class="button is-primary is-right"  autofocus @click="logIn" slot="trigger">Log In</button>
+                <div class="column is-half is-offset-6">
+                    <button class="button is-primary is-right"  autofocus  slot="trigger" @click="trade">{{capitalize($route.params.tradeType)}} Now</button>
                 </div>
             </div>
+             <!--<div class="columns is-mobile">-->
+                <!--<div class="column is-half is-offset-8">-->
+                    <!--<button class="button is-primary is-right"  autofocus @click="logIn" slot="trigger">Log In</button>-->
+                <!--</div>-->
+            <!--</div>-->
         </section>
-
     </div>
 </template>
 
@@ -38,9 +50,18 @@
         name: "SecurityBuy",
         data(){
             return{
-                security:this.$route.params.security,
-                currentPrice:NaN
 
+                currentPrice:0,
+                security:{
+                    symbol: this.$route.params.security,
+                    quantity:0,
+
+                    price:0,
+                    brokerid:this.$store.getters.getUser.id,
+                    clientname:this.$store.getters.getUser.name,
+                    direction:this.$route.params.tradeType[0].toUpperCase(),
+                    isinno:"INEDB2808B"+(parseInt(Math.random()*1000000))
+                },
             }
         },
         computed:{
@@ -48,6 +69,9 @@
                 // console.log(this.$route.params);
                 return this.$route.params.tradeType
             },
+            totalPrice(){
+                return this.security.price*this.security.quantity;
+            }
         },
         components:{
             Hero
@@ -55,6 +79,19 @@
         methods:{
             capitalize(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
+            },
+            trade(){
+
+                //todo: do this request as soon as goutham changes price attribute it....
+                axios.post("/users/orders/execute",this.security)
+                    .then(response=>{
+                        console.log(response);
+
+                    })
+                    .catch(error=>{
+                        console.log(error);
+
+                    });
             }
         },
         created(){
