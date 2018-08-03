@@ -127,7 +127,7 @@
 
 
                 //todo update url for flagged orders
-                axios.get("/orders")
+                axios.get("/flagged")
                     .then(({data})=>{
                         console.log(data);
                         this.flaggedOrdersData=data;
