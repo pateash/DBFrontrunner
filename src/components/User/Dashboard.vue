@@ -16,7 +16,7 @@
                         >
 
                             <template slot-scope="props">
-                                <b-table-column field="issnno" label="ISSN No." sortable>
+                                <b-table-column field="isinno" label="ISIN No." sortable>
                                     {{ props.row.isinno }}
                                 </b-table-column>
                                 <b-table-column field="companyname" label="Company Name" sortable>
@@ -161,7 +161,7 @@
                         label: 'Trade Symbol',
                     },
                     {
-                        field: "issnno",
+                        field: "isinno",
                         label: 'ISIN no.',
                     },
                     {

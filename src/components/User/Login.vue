@@ -46,8 +46,8 @@
                     message: "Please Login for continuing seeing your trade history and managing your limits ...",
                 },
                 user: {
-                    id:"DBBRO8",
-                    password:"123"
+                    id:"DBBRO7",
+                    password:""
                 } //we will use this temperary varible and use computed property for rendering data.
             }
         },
