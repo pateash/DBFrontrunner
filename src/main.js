@@ -9,7 +9,7 @@ window.notification=notification;
 
 import router from "./router";
 import Buefy from 'buefy';
-import 'buefy/lib/buefy.css';
+import 'buefy/dist/buefy.css';
 import Hero from './components/Hero';
 
 Vue.use(Buefy);
